@@ -114,11 +114,11 @@ public class CoreException extends RuntimeException {
     @Override
     public String toString() {
 
-        StringBuilder sb = new StringBuilder(""); 
+        StringBuilder sb = new StringBuilder();
         String lineSeparator = System.getProperty("line.separator");
         
         if (this.innerExcep != null)
-            sb.append(this.innerExcep.toString() + " , ");
+            sb.append(this.innerExcep + " , ");
         else
             sb.append(super.toString() + " , ");
         

@@ -21,7 +21,7 @@ import java.util.Map;
 @Service
 public class FileService implements IFileService {
 
-	private static Logger logger = LoggerFactory.getLogger(FileService.class);
+	private static final Logger logger = LoggerFactory.getLogger(FileService.class);
 
 	@Autowired
 	IFileUploadDAO dao;

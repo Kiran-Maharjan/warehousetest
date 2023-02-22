@@ -1,6 +1,8 @@
 package com.example.warehousetest.controller;
 
 import com.example.warehousetest.csv.CSVRecord;
+import com.example.warehousetest.exceptionhandlers.exceptions.EntityAlreadyExistsException;
+import com.example.warehousetest.exceptionhandlers.exceptions.InvalidDataException;
 import com.example.warehousetest.service.IFileService;
 import com.opencsv.CSVReader;
 import lombok.Getter;
@@ -28,15 +30,16 @@ import java.util.List;
 @RestController
 public class UploadController {
 
-    private static Logger logger = LoggerFactory.getLogger(UploadController.class);
-	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-	@Autowired
-    IFileService service ;
+    private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
+    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+    @Autowired
+    IFileService service;
 
-@GetMapping(value="/test")
-public String test(){
-    return "test";
-}
+    @GetMapping(value = "/test")
+    public String test() {
+        return "test";
+    }
+
     @PostMapping(value = "/uploadFile")
     public String uploadFile(
             ModelMap model,
@@ -46,12 +49,17 @@ public String test(){
 
 
         if (file.isEmpty()) {
-            logger.info("Validation failed file is empty");
-            return "Validation failed file is empty";
-        }
-        else if(service.isFileExist(file.getOriginalFilename())){
-            logger.info("File already exist!!");
-            return "File already exist!!";
+            //-- Exception handling
+            throw new InvalidDataException("The provided record doesn't exists, file empty");
+
+//            logger.info("Validation failed file is empty");
+//            return "Validation failed file is empty";
+        } else if (service.isFileExist(file.getOriginalFilename())) {
+            //-- Exception handling
+            throw new EntityAlreadyExistsException("The provided record already exists");
+
+//            logger.info("File already exist!!");
+//            return "File already exist!!";
         }
         String fileName = file.getOriginalFilename();
         String rootPath = request.getSession().getServletContext().getRealPath("/");
@@ -76,37 +84,37 @@ public String test(){
             }
         } catch (IOException ex) {
             logger.error("Exception: ", ex);
-            return "Exception: "+ex;
+            return "Exception: " + ex;
         }
 
         try {
             logger.info("Reading processed to CSV file");
             List<CSVRecord> validDeals = new ArrayList<>();
             List<CSVRecord> inValidDeals = new ArrayList<>();
-            for(String[] line:readCSVFile(serverFile, fileName)) {
+            for (String[] line : readCSVFile(serverFile, fileName)) {
                 CSVRecord csvRecord = extractDeal(line);
                 csvRecord.setFileName(fileName);
-                 if(StringUtils.isEmpty(csvRecord.getFromCurrencyIsoCode())){
+                if (StringUtils.isEmpty(csvRecord.getFromCurrencyIsoCode())) {
                     csvRecord.setReason("from currency is empty");
                     inValidDeals.add(csvRecord);
-                }else if(StringUtils.isEmpty(csvRecord.getToCurrencyIsoCode())) {
+                } else if (StringUtils.isEmpty(csvRecord.getToCurrencyIsoCode())) {
                     csvRecord.setReason("to currency is empty");
                     inValidDeals.add(csvRecord);
-                }else if(StringUtils.isEmpty(csvRecord.getDealDate())) {
+                } else if (StringUtils.isEmpty(csvRecord.getDealDate())) {
                     csvRecord.setReason("deal date is empty");
                     inValidDeals.add(csvRecord);
-                }else if(StringUtils.isEmpty(csvRecord.getAmount())) {
+                } else if (StringUtils.isEmpty(csvRecord.getAmount())) {
                     csvRecord.setReason(" amount is empty");
                     inValidDeals.add(csvRecord);
-                } else{
+                } else {
                     validDeals.add(csvRecord);
 
                 }
 
             }
-            if(validDeals.size() > 0)
+            if (validDeals.size() > 0)
                 service.saveValidDeal(validDeals);
-            if(inValidDeals.size() > 0)
+            if (inValidDeals.size() > 0)
                 service.saveInValidDeal(inValidDeals);
 
         } catch (Exception e) {
@@ -116,7 +124,7 @@ public String test(){
         return "Completed successfully!!!";
     }
 
-    CSVRecord extractDeal(String[] line){
+    CSVRecord extractDeal(String[] line) {
 
         CSVRecord dealModel = new CSVRecord();
         dealModel.setToCurrencyIsoCode(line[0]);
@@ -131,7 +139,7 @@ public String test(){
         return dealModel;
     }
 
-    List<String[]> readCSVFile(File serverFile, String fileName){
+    List<String[]> readCSVFile(File serverFile, String fileName) {
         List<String[]> lines = null;
         try {
             logger.info(" reading CSV file");

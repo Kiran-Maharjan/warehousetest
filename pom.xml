@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.progresssoft</groupId>
+	<artifactId>WarehouseTest</artifactId>
+	<packaging>jar</packaging>
+	<version>1.0</version>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.4.3.RELEASE</version>
+	</parent>
+
+
+	<properties>
+		<java.version>1.8</java.version>
+		<springframework.version>4.0.6.RELEASE</springframework.version>
+		<hibernate.version>4.3.10.Final</hibernate.version>
+		<testng.version>6.9.4</testng.version>
+		<mockito.version>1.10.19</mockito.version>
+		<dbunit.version>2.2</dbunit.version>
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.31</version>
+		</dependency>
+		<!-- Tomcat Embed -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<version>1.5.22.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-util</artifactId>
+			<version>9.0.7</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-jasper -->
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+			<version>9.0.58</version>
+		</dependency>
+
+		<!-- open CSV reader -->
+		<dependency>
+			<groupId>com.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>3.9</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>${mockito.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>${testng.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.3</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-all</artifactId>
+			<version>1.3</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>dbunit</groupId>
+			<artifactId>dbunit</artifactId>
+			<version>${dbunit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.26</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.9.0</version>
+		</dependency>
+
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

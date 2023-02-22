@@ -74,17 +74,17 @@ public class LoggingAspect {
     @Around("applicationPackagePointcut() && springBeanPointcut()")
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
         long beginTime = System.currentTimeMillis();
-        if (log.isInfoEnabled()) {
-            log.info("Enter: {}.{}() with argument[s] = {}", joinPoint.getSignature().getDeclaringTypeName(),
-                    joinPoint.getSignature().getName(), Arrays.toString(joinPoint.getArgs()));
-        }
+//        if (log.isInfoEnabled()) {
+//            log.info("Enter: {}.{}() with argument[s] = {}", joinPoint.getSignature().getDeclaringTypeName(),
+//                    joinPoint.getSignature().getName(), Arrays.toString(joinPoint.getArgs()));
+//        }
         try {
             response = joinPoint.proceed();
-            if (log.isInfoEnabled()) {
-                log.info("Exit: {}.{}() with response = {}", joinPoint.getSignature().getDeclaringTypeName(),
-                        joinPoint.getSignature().getName(), response);
+//            if (log.isInfoEnabled()) {
+//                log.info("Exit: {}.{}() with response = {}", joinPoint.getSignature().getDeclaringTypeName(),
+//                        joinPoint.getSignature().getName(), response);
                 saveLog(joinPoint, beginTime);
-            }
+//            }
             return response;
         } catch (IllegalArgumentException e) {
             log.error("Illegal argument: {} in {}.{}()", Arrays.toString(joinPoint.getArgs()),
@@ -117,7 +117,7 @@ public class LoggingAspect {
         ActivityLog activityLog = new ActivityLog();
         String className = joinPoint.getTarget().getClass().getName();
         String methodName = signature.getName();
-        activityLog.setMethod(className + "." + methodName + "()");
+//        activityLog.setMethod(className + "." + methodName + "()");
         Object[] args = joinPoint.getArgs();
         LocalVariableTableParameterNameDiscoverer u = new LocalVariableTableParameterNameDiscoverer();
         String[] paramNames = u.getParameterNames(method);
@@ -126,7 +126,7 @@ public class LoggingAspect {
             for (int i = 0; i < args.length; i++) {
                 params += "  " + paramNames[i] + ": " + args[i];
             }
-            activityLog.setParams(params);
+//            activityLog.setParams(params);
         }
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (servletRequestAttributes != null) {
@@ -137,10 +137,10 @@ public class LoggingAspect {
             activityLog.setOperation(request.getMethod());
             activityLog.setActivities(request.getMethod());
 
-            String[] methodArray = activityLog.getMethod().split("\\.", 8);
+//            String[] methodArray = activityLog.getMethod().split("\\.", 8);
             Gson gson = new Gson();
 
-            activityLog.setResponse(response != null ? gson.toJson(response) : null);
+//            activityLog.setResponse(response != null ? gson.toJson(response) : null);
             activityLogServiceImpl.saveApplicationLog(activityLog);
         }
     }

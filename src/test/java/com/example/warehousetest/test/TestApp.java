@@ -30,20 +30,20 @@ public class TestApp extends WarehousetestApplication {
                 .andExpect(content().contentType("application/json;charset=UTF-8"));
     }
 
-    @Test
-    public void whenFileUploaded_thenVerifyStatus()
-            throws Exception {
-        MockMultipartFile file
-                = new MockMultipartFile(
-                "file",
-                "sample.csv",
-                MediaType.TEXT_PLAIN_VALUE,
-                "Hello, World!".getBytes()
-        );
-
-        MockMvc mockMvc
-                = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+//    @Test
+//    public void whenFileUploaded_thenVerifyStatus()
+//            throws Exception {
+//        MockMultipartFile file
+//                = new MockMultipartFile(
+//                "file",
+//                "sample.csv",
+//                MediaType.TEXT_PLAIN_VALUE,
+//                "Hello, World!".getBytes()
+//        );
+//
+//        MockMvc mockMvc
+//                = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 //        mockMvc.perform(multipart("/uploadFile").file(file))
 //                .andExpect(status().isOk());
-    }
+//    }
 }

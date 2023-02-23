@@ -134,6 +134,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<finalName>warehousetest-docker</finalName>
 	</build>
 
 </project>

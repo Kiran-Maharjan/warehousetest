@@ -48,7 +48,7 @@ public class LoggingAspect {
     /**
      * Pointcut that matches all Spring beans in the application's main packages.
      */
-    @Pointcut(value="execution(* com.example.warehousetest.*.*.*(..) )")
+    @Pointcut(value="execution(* com.example.warehousetest.controller.*.*(..) )")
     public void applicationPackagePointcut() {
         // Method is empty as this is just a Pointcut, the implementations are in the advices.
     }
@@ -74,17 +74,17 @@ public class LoggingAspect {
     @Around("applicationPackagePointcut() && springBeanPointcut()")
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
         long beginTime = System.currentTimeMillis();
-//        if (log.isInfoEnabled()) {
-//            log.info("Enter: {}.{}() with argument[s] = {}", joinPoint.getSignature().getDeclaringTypeName(),
-//                    joinPoint.getSignature().getName(), Arrays.toString(joinPoint.getArgs()));
-//        }
+        if (log.isInfoEnabled()) {
+            log.info("Enter: {}.{}() with argument[s] = {}", joinPoint.getSignature().getDeclaringTypeName(),
+                    joinPoint.getSignature().getName(), Arrays.toString(joinPoint.getArgs()));
+        }
         try {
             response = joinPoint.proceed();
-//            if (log.isInfoEnabled()) {
-//                log.info("Exit: {}.{}() with response = {}", joinPoint.getSignature().getDeclaringTypeName(),
-//                        joinPoint.getSignature().getName(), response);
+            if (log.isInfoEnabled()) {
+                log.info("Exit: {}.{}() with response = {}", joinPoint.getSignature().getDeclaringTypeName(),
+                        joinPoint.getSignature().getName(), response);
                 saveLog(joinPoint, beginTime);
-//            }
+            }
             return response;
         } catch (IllegalArgumentException e) {
             log.error("Illegal argument: {} in {}.{}()", Arrays.toString(joinPoint.getArgs()),
